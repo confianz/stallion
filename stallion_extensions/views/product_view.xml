@@ -39,9 +39,15 @@
                     <filter string="Fresh" name="Fresh" domain="[('condition', '=', 'new')]"/>
                     <filter string="HDD" name="hdd" domain="[('group', '=', 'hdd')]"/>
                     <filter string="SSD" name="ssd" domain="[('group', '=', 'ssd')]"/>
+
+
+                   <group expand="0" name="group_by" string="Group By">
+                       <filter name="brand" string="Brand" domain="[]" context="{'group_by' : 'brand_id'}"/>
+                       <filter name="subgroup" string="Subgroup" context="{'group_by': 'subgroup_id'}"/>
+                       <filter name="mfg" string="MFG" context="{'group_by': 'manufacturer_id'}"/>
+                   </group>
+
                 </filter>
-
-
 
             </field>
         </record>
