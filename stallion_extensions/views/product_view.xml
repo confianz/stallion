@@ -17,10 +17,39 @@
                     <field name="manufacturer_id"/>
                 </xpath>
 
+            </field>
+        </record>
+
+
+
+        <record id="product_template_search_view_inherit_stallion" model="ir.ui.view">
+            <field name="name">product.template.search.inherit.stallion</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+
+                <field name="categ_id" position="after">
+                    <field name="brand_id" filter_domain="[('brand_id', 'ilike', raw_value)]"/>
+                    <field name="subgroup_id" filter_domain="[('subgroup_id', 'ilike', raw_value)]"/>
+                    <field name="manufacturer_id" filter_domain="[('manufacturer_id', 'ilike', raw_value)]"/>
+                </field>
+
+                <filter name="consumable" position="after">
+                    <filter string="Refurbished" name="Refurbished" domain="[('condition', '=', 'refurb')]"/>
+                    <filter string="Fresh" name="Fresh" domain="[('condition', '=', 'new')]"/>
+                    <filter string="HDD" name="hdd" domain="[('group', '=', 'hdd')]"/>
+                    <filter string="SSD" name="ssd" domain="[('group', '=', 'ssd')]"/>
+                </filter>
+
 
 
             </field>
         </record>
+
+
+
+
+
 
 
     </data>
