@@ -5,8 +5,8 @@ from odoo import _, api, fields, models
 
 
 
-class ProductProduct(models.Model):
-    _inherit = 'product.product'
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
 
     condition = fields.Selection([('new', 'New'), ('refurb', 'Refurbished')], string='Condition')
     group = fields.Selection([('hdd', 'HDD'), ('ssd', 'SSD')], string='Group')
@@ -15,7 +15,7 @@ class ProductProduct(models.Model):
     manufacturer_id = fields.Many2one('product.mfg', string='MFG')
 
 
-ProductProduct()
+ProductTemplate()
 
 
 
