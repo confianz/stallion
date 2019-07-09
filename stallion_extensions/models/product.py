@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models, _
 
 
 
@@ -24,6 +24,7 @@ class ProductBrand(models.Model):
 
     name = fields.Char(string='Name', required=True)
     description = fields.Char(string = "Description")
+    product_ids = fields.One2many('product.template', 'brand_id', string='Products')
 
 ProductBrand()
 
@@ -34,6 +35,7 @@ class ProductSubgroup(models.Model):
 
     name = fields.Char(string='Name', required=True)
     description = fields.Char(string = "Description")
+    product_ids = fields.One2many('product.template', 'subgroup_id', string='Products')
 
 ProductSubgroup()
 
@@ -43,6 +45,7 @@ class ProductMfg(models.Model):
 
     name = fields.Char(string='Name', required=True)
     description = fields.Char(string = "Description")
+    product_ids = fields.One2many('product.template', 'manufacturer_id', string='Products')
 
 ProductMfg()
 
