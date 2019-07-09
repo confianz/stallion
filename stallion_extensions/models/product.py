@@ -22,7 +22,8 @@ ProductTemplate()
 class ProductBrand(models.Model):
     _name = 'product.brand'
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name', required=True)
+    description = fields.Char(string = "Description")
 
 ProductBrand()
 
@@ -31,7 +32,8 @@ ProductBrand()
 class ProductSubgroup(models.Model):
     _name = 'product.subgroup'
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name', required=True)
+    description = fields.Char(string = "Description")
 
 ProductSubgroup()
 
@@ -39,7 +41,8 @@ ProductSubgroup()
 class ProductMfg(models.Model):
     _name = 'product.mfg'
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name', required=True)
+    description = fields.Char(string = "Description")
 
 ProductMfg()
 
