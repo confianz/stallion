@@ -2,6 +2,7 @@
 <odoo>
     <data>
         <record id="product_template_form_view_inherit_stallion" model="ir.ui.view">
+
             <field name="name">product.template.form.inherit.stallion</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
@@ -12,17 +13,43 @@
                     <field name="group"/>
                     <field name="brand_id"/>
                 </xpath>
+
                 <xpath expr="//field[@name='list_price']" position="after">
                     <field name="subgroup_id"/>
                     <field name="manufacturer_id"/>
                 </xpath>
+
+                <button name="toggle_active" position="before">
+                    <button name="#" class="oe_stat_button" type="action" icon="fa-building-o" attrs="{'invisible':[('is_manufactured','!=',True)]}">
+                        <field string="Quantity" name="qty_product" widget="statinfo"/>
+                    </button>
+                </button>
+
+                <field name='name' position="after">
+                    <field name ='is_manufactured' invisible='0'/>
+                </field>
 
             </field>
         </record>
 
 
 
+        <record id="product_template_stock_form_view_inherit_stallion" model="ir.ui.view">
+            <field name="name">product.template.form.inherit.stallion</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_open_quants']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('type', '!=', 'product'),('is_manufactured','=',True)]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
         <record id="product_template_search_view_inherit_stallion" model="ir.ui.view">
+
             <field name="name">product.template.search.inherit.stallion</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_search_view"/>
@@ -40,7 +67,6 @@
                     <filter string="HDD" name="hdd" domain="[('group', '=', 'hdd')]"/>
                     <filter string="SSD" name="ssd" domain="[('group', '=', 'ssd')]"/>
 
-
                    <group expand="0" name="group_by" string="Group By">
                        <filter name="brand" string="Brand" domain="[]" context="{'group_by' : 'brand_id'}"/>
                        <filter name="subgroup" string="Subgroup" context="{'group_by': 'subgroup_id'}"/>
@@ -51,11 +77,6 @@
 
             </field>
         </record>
-
-
-
-
-
 
 
     </data>

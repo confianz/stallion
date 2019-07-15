@@ -10,10 +10,11 @@
     """,
     'author': 'Confianz Global',
     'website': 'http://www.confianzit.com',
-    'depends': ['product','sale'],
+    'depends': ['product','sale','mrp'],
     'data': [
             'views/product_view.xml',
             'views/product_menu_views.xml',
+            'wizard/subgroup_wizard_views.xml',
             'security/ir.model.access.csv',
         ],
     'installable': True,
