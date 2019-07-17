@@ -9,16 +9,23 @@
         <field name="arch" type="xml">
             <form string="subgroup wizard">
                 <sheet>
+
+                       <field name="name" invisible="1"/>
+                       <separator string="Choose Subgroups and Parts"/>
                     <group>
-                       <field name="name"/>
-                       <field name="line_ids">
+
+
+                       <field name="line_ids" nolabel="1">
                           <tree editable="bottom">
                                  <field name = "name"/>
-                                 <field name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                 <field string="Parts" name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
                            </tree>
                        </field>
                     </group>
                 </sheet>
+                <footer>
+                    <button special="cancel" string="Cancel" class="oe_highlight" />
+                </footer>
             </form>
         </field>
     </record>
