@@ -27,7 +27,7 @@
                     <form string="Product Subgroup">
                         <sheet>
                              <group>
-                                   <field name = "name"/>
+                                   <field name = "name" required="1"/>
                                    <field name = "description"/>
                                    <field name="product_ids" widget="many2many_tags"/>
                              </group>

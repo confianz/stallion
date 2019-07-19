@@ -10,9 +10,9 @@ class ProductTemplate(models.Model):
 
     condition = fields.Selection([('new', 'New'), ('refurb', 'Refurbished')], string='Condition')
     group = fields.Selection([('hdd', 'HDD'), ('ssd', 'SSD')], string='Group')
-    brand_id = fields.Many2one('product.brand', string='Brand')
-    subgroup_id = fields.Many2one('product.subgroup', string= 'Subgroup')
-    manufacturer_id = fields.Many2one('product.mfg', string='MFG')
+    brand_id = fields.Many2one('product.brand', string='Brand', ondelete="set null")
+    subgroup_id = fields.Many2one('product.subgroup', string= 'Subgroup', ondelete="set null")
+    manufacturer_id = fields.Many2one('product.mfg', string='MFG', ondelete="set null")
     qty_product = fields.Integer(string="Quantity", compute='_compute_qty_product')
     is_manufactured = fields.Boolean(string= 'Is Manufactured', compute='_compute_is_manufactured', default=False)
 
@@ -41,7 +41,7 @@ ProductTemplate()
 class ProductBrand(models.Model):
     _name = 'product.brand'
 
-    name = fields.Char(string= 'Name', required=True)
+    name = fields.Char(string= 'Name', required=False)
     description = fields.Char(string="Description")
     product_ids = fields.One2many('product.product', 'brand_id', string='Products')
 

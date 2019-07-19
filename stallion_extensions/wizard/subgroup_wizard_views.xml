@@ -17,13 +17,14 @@
 
                        <field name="line_ids" nolabel="1">
                           <tree editable="bottom">
-                                 <field name = "name"/>
-                                 <field string="Parts" name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                 <field name="subgroup_id" required="1"/>
+                                 <field string="Parts" name="product_ids" widget="many2many_tags" options="{'no_create': True}" required="1"/>
                            </tree>
                        </field>
                     </group>
                 </sheet>
                 <footer>
+                    <button name="action_create_product" string='Create Products' type="object" class="oe_highlight"/>
                     <button special="cancel" string="Cancel" class="oe_highlight" />
                 </footer>
             </form>
