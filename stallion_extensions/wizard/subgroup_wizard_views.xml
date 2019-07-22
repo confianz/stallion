@@ -17,7 +17,8 @@
 
                        <field name="line_ids" nolabel="1">
                           <tree editable="bottom">
-                                 <field name="subgroup_id" required="1"/>
+                                 <field name="parent_subgroup_id" required="1" domain="[('parent_subgroup_id', '=', False)]"/>
+                                 <field name="subgroup_id" required="1" domain="[('parent_subgroup_id', '=', True)]"/>
                                  <field string="Parts" name="product_ids" widget="many2many_tags" options="{'no_create': True}" required="1"/>
                            </tree>
                        </field>

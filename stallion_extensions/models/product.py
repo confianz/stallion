@@ -57,12 +57,14 @@ class ProductSubgroup(models.Model):
     description = fields.Char(string="Description")
     product_ids = fields.One2many('product.product', 'subgroup_id', string='Products')
     parent_subgroup_id = fields.Many2one('product.subgroup', string="Parent Subgroup")
-
+    child_subgroup_ids = fields.One2many('product.subgroup', 'parent_subgroup_id', string="Child Subgroups")
 
     @api.constrains('parent_subgroup_id')
     def _check_subgroup_recursion(self):
         if not self._check_recursion(parent='parent_subgroup_id'):
             raise ValidationError(_('You cannot create recursive subgroups.'))
+        if self.child_subgroup_ids and self.parent_subgroup_id:
+            raise ValidationError(_('You cannot create multi level subgroups.'))
         return True
 
 
