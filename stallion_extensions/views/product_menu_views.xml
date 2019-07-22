@@ -3,15 +3,15 @@
 <data>
 
     <!-- form view for Product Brand -->
-    <record model = "ir.ui.view" id = "product_brand_form_view">
-                <field name = "name">product.brand</field>
-                <field name = "model">product.brand</field>
-                <field name = "arch" type = "xml">
+    <record model="ir.ui.view" id="product_brand_form_view">
+                <field name="name">product.brand</field>
+                <field name="model">product.brand</field>
+                <field name="arch" type="xml">
                     <form string="Product Brand">
                         <sheet>
                              <group>
-                                   <field name = "name"/>
-                                   <field name = "description"/>
+                                   <field name="name"/>
+                                   <field name="description"/>
                                    <field name="product_ids" widget="many2many_tags"/>
                              </group>
                         </sheet>
@@ -20,16 +20,17 @@
     </record>
 
     <!-- form view for Product Subgroup -->
-    <record model = "ir.ui.view" id = "product_subgroup_form_view">
-                <field name = "name">product.subgroup</field>
-                <field name = "model">product.subgroup</field>
-                <field name = "arch" type = "xml">
+    <record model="ir.ui.view" id="product_subgroup_form_view">
+                <field name="name">product.subgroup</field>
+                <field name="model">product.subgroup</field>
+                <field name="arch" type="xml">
                     <form string="Product Subgroup">
                         <sheet>
                              <group>
-                                   <field name = "name" required="1"/>
-                                   <field name = "description"/>
-                                   <field name="product_ids" widget="many2many_tags"/>
+                                   <field name="name" required="1"/>
+                                   <field name="description"/>
+                                   <field name="parent_subgroup_id" domain="[('parent_subgroup_id', '=', False)]"/>
+                                   <field name="product_ids" widget="many2many_tags" attrs="{'invisible': [('parent_subgroup_id', '=', False)]}"/>
                              </group>
                         </sheet>
                     </form>
@@ -37,15 +38,15 @@
     </record>
 
     <!-- form view for Product Subgroup -->
-    <record model = "ir.ui.view" id = "product_mfg_form_view">
-                <field name = "name">product.mfg</field>
-                <field name = "model">product.mfg</field>
-                <field name = "arch" type = "xml">
+    <record model="ir.ui.view" id="product_mfg_form_view">
+                <field name="name">product.mfg</field>
+                <field name="model">product.mfg</field>
+                <field name="arch" type="xml">
                     <form string="Product Mfg">
                         <sheet>
                              <group>
-                                   <field name = "name"/>
-                                   <field name = "description"/>
+                                   <field name="name"/>
+                                   <field name="description"/>
                                    <field name="product_ids" widget="many2many_tags"/>
                              </group>
                         </sheet>
@@ -59,8 +60,8 @@
                 <field  name="model">product.brand</field>
                 <field  name="arch"  type="xml">
                     <tree>  
-                         <field name = "name"/>
-                         <field name = "description"/>
+                         <field name="name"/>
+                         <field name="description"/>
                     </tree>
                 </field>
     </record>
@@ -71,8 +72,8 @@
                 <field  name="model">product.subgroup</field>
                 <field  name="arch"  type="xml">
                     <tree>  
-                         <field name = "name"/>
-                         <field name = "description"/>
+                         <field name="name"/>
+                         <field name="description"/>
                     </tree>
                 </field>
     </record>
@@ -83,8 +84,8 @@
                 <field  name="model">product.mfg</field>  
                 <field  name="arch"  type="xml">
                     <tree>  
-                         <field name = "name"/>
-                         <field name = "description"/>
+                         <field name="name"/>
+                         <field name="description"/>
                     </tree>
                 </field>
     </record>

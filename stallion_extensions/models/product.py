@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-
+from odoo.exceptions import ValidationError
 
 
 
@@ -41,7 +41,7 @@ ProductTemplate()
 class ProductBrand(models.Model):
     _name = 'product.brand'
 
-    name = fields.Char(string= 'Name', required=False)
+    name = fields.Char(string='Name', required=False)
     description = fields.Char(string="Description")
     product_ids = fields.One2many('product.product', 'brand_id', string='Products')
 
@@ -56,6 +56,14 @@ class ProductSubgroup(models.Model):
     name = fields.Char(string='Name', required=True)
     description = fields.Char(string="Description")
     product_ids = fields.One2many('product.product', 'subgroup_id', string='Products')
+    parent_subgroup_id = fields.Many2one('product.subgroup', string="Parent Subgroup")
+
+
+    @api.constrains('parent_subgroup_id')
+    def _check_subgroup_recursion(self):
+        if not self._check_recursion(parent='parent_subgroup_id'):
+            raise ValidationError(_('You cannot create recursive subgroups.'))
+        return True
 
 
 ProductSubgroup()
