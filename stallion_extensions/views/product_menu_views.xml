@@ -29,9 +29,11 @@
                              <group>
                                    <field name="name" required="1"/>
                                    <field name="description"/>
+                                   <field name="nomenclature_string"/>
                                    <field name="parent_subgroup_id" domain="[('parent_subgroup_id', '=', False)]"/>
-                                   <field name="product_ids" widget="many2many_tags" attrs="{'invisible': [('parent_subgroup_id', '=', False)]}"/>
                              </group>
+                               <separator string="Products"/>
+                               <field nolabel="1" name="product_ids" widget="many2many_tags" attrs="{'invisible': [('parent_subgroup_id', '=', False)]}"/>
                         </sheet>
                     </form>
                 </field>

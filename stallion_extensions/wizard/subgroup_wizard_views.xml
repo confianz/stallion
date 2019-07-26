@@ -9,23 +9,24 @@
         <field name="arch" type="xml">
             <form string="subgroup wizard">
                 <sheet>
-
-                       <field name="name" invisible="1"/>
+                    <group>
+                       <field name="name" required="1"/>
+                    </group>
                        <separator string="Choose Subgroups and Parts"/>
                     <group>
-
-
                        <field name="line_ids" nolabel="1">
                           <tree editable="bottom">
                                  <field name="parent_subgroup_id" required="1" domain="[('parent_subgroup_id', '=', False)]"/>
                                  <field name="subgroup_id" required="1" domain="[('parent_subgroup_id', '=', True)]"/>
-                                 <field string="Parts" name="product_ids" widget="many2many_tags" options="{'no_create': True}" required="1"/>
+                                 <field string="Parts" name="product_id" options="{'no_create': True}" required="1"/>
+                                 <field name="qty_oh" readonly="1"/>
+                                 <field name="quantity"/>
                            </tree>
                        </field>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_create_product" string='Create Products' type="object" class="oe_highlight"/>
+                    <button name="action_create_product" string='Create Product' type="object" class="oe_highlight"/>
                     <button special="cancel" string="Cancel" class="oe_highlight" />
                 </footer>
             </form>

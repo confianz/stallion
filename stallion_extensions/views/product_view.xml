@@ -11,10 +11,11 @@
                 <xpath expr="//field[@name='categ_id']" position="after">
                     <field name="condition"/>
                     <field name="group"/>
-                    <field name="brand_id"/>
+                    <field name="nomenclature_string"/>
                 </xpath>
 
                 <xpath expr="//field[@name='list_price']" position="after">
+                    <field name="brand_id"/>
                     <field name="subgroup_id"/>
                     <field name="manufacturer_id"/>
                 </xpath>

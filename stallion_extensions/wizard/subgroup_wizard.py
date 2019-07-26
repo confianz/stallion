@@ -15,36 +15,28 @@ class SubgroupWizard(models.TransientModel):
 
     @api.multi
     def action_create_product(self):
-        route_id = self.env['stock.location.route'].search([('name', '=', 'Manufacture')], limit = 1)
+        active_model = self._context.get('active_model', False)
+        active_id = self._context.get('active_id', False)
+
+        route_id = self.env['stock.location.route'].search([('name', '=', 'Manufacture')], limit=1)
 
         for rec in self:
-            line_products = []
-            all_products_combinations = []
-            for line in rec.line_ids:
-                line_products.append(line.product_ids.ids)
 
-
-            all_products_combinations = list(itertools.product(*line_products))
-
-        if route_id:
-            index = 1
-            for product_combination in all_products_combinations:
-                new_product = self.env['product.product'].create({
-                                                                    'name':'New Product %s' %(index),
-                                                                    'route_ids': [(6, 0, route_id.ids)],
-                                                                 })
-                index += 1
+            new_product = self.env['product.product'].create({
+                                                                'name': rec.name,
+                                                                'route_ids': [(6, 0, route_id.ids)],
+                                                             })
+            if new_product:
                 bom = self.env['mrp.bom'].create({
                                                     'product_tmpl_id': new_product.product_tmpl_id.id,
                                                     'product_id': new_product.id,
                                                     'product_qty': 1,
                                                     'type': 'phantom',
-                                                    'bom_line_ids': [(0, 0, {'product_id': pid, 'product_qty': 1}) for pid in product_combination],
+                                                    'bom_line_ids': [(0, 0, {'product_id': rec_line.product_id.id, 'product_qty': rec_line.quantity}) for rec_line in rec.line_ids],
                                                  })
 
-
-
-
+                if active_model == 'sale.order' and active_id and bom:
+                    self.env[active_model].browse(active_id).write({'order_line': [(0, 0, {'product_id': new_product.id, 'name': new_product.name})]})
 
 
 
@@ -57,8 +49,10 @@ class SubgroupWizardLine(models.TransientModel):
 
     parent_subgroup_id = fields.Many2one('product.subgroup', string='Parent Subgroup')
     subgroup_id = fields.Many2one('product.subgroup', string='Subgroup')
-    product_ids = fields.Many2many('product.product', string='Products')
+    product_id = fields.Many2one('product.product', string='Products')
     parent_id = fields.Many2one('subgroup.wizard', string="Parent")
+    quantity = fields.Float(string='Qty Req', default=1.0)
+    qty_oh = fields.Float(string='Qty Available', related='product_id.virtual_available')
 
 
     @api.onchange('parent_subgroup_id')
@@ -67,7 +61,7 @@ class SubgroupWizardLine(models.TransientModel):
         res = {}
         res['domain'] = {'subgroup_id':[('id', 'in', child_subgroup_ids)]}
         self.subgroup_id = False
-        self.product_ids = False
+        self.product_id = False
         return res
 
 
@@ -75,8 +69,8 @@ class SubgroupWizardLine(models.TransientModel):
     def _onchange_subgroup_id(self):
         product_ids = self.subgroup_id and self.subgroup_id.product_ids and self.subgroup_id.product_ids.ids or []
         res = {}
-        res['domain'] = {'product_ids':[('id', 'in', product_ids)]}
-        self.product_ids = False
+        res['domain'] = {'product_id':[('id', 'in', product_ids)]}
+        self.product_id = False
         return res
 
 

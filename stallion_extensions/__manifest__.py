@@ -15,6 +15,7 @@
             'views/product_view.xml',
             'views/product_menu_views.xml',
             'wizard/subgroup_wizard_views.xml',
+            'views/sale_order_view.xml',
             'security/ir.model.access.csv',
         ],
     'installable': True,
